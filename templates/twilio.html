@@ -18,11 +18,31 @@
 
 <hr>
 
-<h3>Getting started with Twilio</h3>
-<p>Register - <a href="https://www.twilio.com/try-twilio">https://www.twilio.com/try-twilio</a></p>
-<p>Verify phone number with access code.</p>
-<p>Pick a phone number.</p>
-<p>Poke around all their API endpoints, make and receive calls, make and receive SMS.</p>
+
+<h3 id="getting-twilio-account">Getting Twilio Account</h3>
+
+<ul>
+<li>Register <a href="https://www.twilio.com/try-twilio">https://www.twilio.com/try-twilio</a>.</li>
+<li>Verify phone number with access code.</li>
+<li>Pick a phone number.</li>
+<li>Poke around all their API endpoints, make and receive calls, make and receive SMS.</li>
+</ul>
+
+<p>When you are registered locate your your Account SID and Auth Token here,<a href="https://www.twilio.com/user/account">https://www.twilio.com/user/account</a> and add them to your .env file</p>
+
+<p><strong>.env</strong>    </p>
+
+<pre><code>TWILIO_ACCOUNT_SID=xxxxxxxxxxxxxx
+TWILIO_AUTH_TOKEN=xxxxxxxxx
+</code></pre>
+
+<p>Now let's add the Twilio account variables to Heroku.</p>
+
+<p><strong>In your code directory in Terminal run,</strong></p>
+
+<pre><code>heroku config:add TWILIO_ACCOUNT_SID=xxxxxxxxxxxxxx
+heroku config:add TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxx
+</code></pre>
 {% endblock %}
 
 
