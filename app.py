@@ -107,12 +107,12 @@ def mailgun():
 
 	test_email = {
 		'to' : 'john.schimmel@gmail.com',
-		'from' : 'schimmel@nyu.edu',
+		'from' : 'john.schimmel@gmail.com',
 		'subject' : 'testing',
 		'text' : 'testing 123'
 	}
 
-	result = requests.post("https://api.mailgun.net/v2/samples.mailgun.org/messages", 
+	result = requests.post("https://api.mailgun.net/v2/%s/messages" % os.environ.get('MAILGUN_DOMAIN'), 
 							auth=('api',os.environ.get('MAILGUN_API_KEY')), 
 							data=test_email)
 
