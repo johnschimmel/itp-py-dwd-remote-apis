@@ -1,14 +1,39 @@
 ## ITP DWD - Using Remote APIs
 
-Adding Requests and Twilio to requirements.txt
+Download code. Open code directory in Terminal.
 
-	requests
-	twilio
+#### #1 Create virtualenv
+
+	virtualenv venv
+
+
+#### #2 Install requirements
 
 In your code directory run the command below to install new requirements.
 
 	. runpip
 
+or
+
+	. venv/bin/activate
+	pip install -r requirements.txt
+
+
+2 new libraries we're using in this example, Twilio and Requests
+
+
+#### #3 Start server
+
+Start server
+
+	. start
+
+or 
+
+	. venv/bin/activate
+	foreman start
+
+-----------
 
 
 ## Getting Started with Remote APIs
