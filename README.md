@@ -15,7 +15,7 @@ In your code directory run the command below to install new requirements.
 
 ### Foursquare API
 
-route **/fsq**
+demo **/fsq**
 
 This is a demo of passing a latitude and longitude to Foursquare Venue Search to get the venues nearby.
 
@@ -51,6 +51,8 @@ Put the API Key in the Javascript, in the fsq.html template file.
 ----------------
 
 ## Twilio demo
+
+demo /twilio
 
 ### Getting Twilio Account
 
