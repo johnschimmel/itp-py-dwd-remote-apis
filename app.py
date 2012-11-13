@@ -14,6 +14,10 @@ app = Flask(__name__)   # create our flask app
 
 
 # --------- Routes ----------
+@app.route('/')
+def main():
+	return render_template('index.html')
+
 @app.route("/fsq", methods=['GET','POST'])
 def fsqdemo():
 	if request.method == "GET":
@@ -70,19 +74,29 @@ def twilio():
 
 	elif request.method == "POST":
 
+		telephone = request.form.get('telephone')
 		sms_text = request.form.get('sms_text')
 
-		# trim message
-		if len(sms_text) > 100:
-			sms_text = sms_text[0:99]
+		# prepare telephone number. regex, only numbers
+		telephone_num = re.sub("\D", "", telephone)
+		if len(telephone_num) != 11:
+			return "your target phone number must be 11 digits. go back and try again."
+		else:
+			to_number = "+1" + str(telephone_num) #US country only now
+
+
+		# trim message to 120
+		if len(sms_text) > 120:
+			sms_text = sms_text[0:119]
 
 		account = os.environ.get('TWILIO_ACCOUNT_SID')
 		token = os.environ.get('TWILIO_AUTH_TOKEN')
 
 		client = TwilioRestClient(account, token)
 
-		message = client.sms.messages.create(to="+16467838457", from_="+16465025220",
-	                                     body="WEB TEST " + sms_text)
+
+		message = client.sms.messages.create(to=to_number, from_="+16465025220",
+	                                     body="DWD DEMO: " + sms_text)
 
 		return "message '%s' sent" % sms_text
 

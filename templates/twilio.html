@@ -6,13 +6,19 @@
 
 <h2>Twilio example, form to sms</h2>
 <form method="POST">
-	<label>Send John a txt. Be nice.</label>
-	<input type="text" name="sms_text"><br>
+	<label>Send a txt msg. Be nice.</label>
+	<br>
+	<label for="telephone">Enter a phone number</label>
+	<input type="tel" id="telephone" name="telephone"> (eg. 19174561234)<br>
+
+	<label for="sms_text">SMS Message</label>
+	<input type="text" id="sms_text" name="sms_text"><br>
 	<input type="submit" class="btn" value="send it">
 </form>
 
 <hr>
 
+<h3>Getting started with Twilio</h3>
 <p>Register - <a href="https://www.twilio.com/try-twilio">https://www.twilio.com/try-twilio</a></p>
 <p>Verify phone number with access code.</p>
 <p>Pick a phone number.</p>
