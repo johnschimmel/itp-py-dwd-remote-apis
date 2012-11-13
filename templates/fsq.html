@@ -40,16 +40,16 @@
       Take the Client ID and Client Secret and put them inside your .env file<br>
       
       <br><b>.env</b><br>
-      <pre>CLIENT_ID=XXXXXXXXXXXXXXXX
-CLIENT_SECRET=XXXXXXXXXXXX</pre>
+      <pre>FOURSQUARE_CLIENT_ID=XXXXXXXXXXXXXXXX
+FOURSQUARE_CLIENT_SECRET=XXXXXXXXXXXX</pre>
 
       <b>app.py</b> will use the environment variables to make the request to Foursquare.
     </p>
     <p><b>IMPORTANT</b> Heroku needs your Foursquare client information too, we need to add new config variables to your app.<br>
 
       <br><b>In your code directory in Terminal run,</b><br>
-      <pre>heroku config:add CLIENT_ID=XXXXXXXXXXXXX 
-heroku config:add CLIENT_SECRET=XXXXXXXXXXXXXX</pre>
+      <pre>heroku config:add FOURSQUARE_CLIENT_ID=XXXXXXXXXXXXX 
+heroku config:add FOURSQUARE_CLIENT_SECRET=XXXXXXXXXXXXXX</pre>
     </p>
 
     <h3>Set up Google</h3>

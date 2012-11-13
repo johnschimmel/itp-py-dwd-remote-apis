@@ -1,82 +1,76 @@
-## MongoDB library - Mongoengine
+## ITP DWD - Using Remote APIs
 
-[Mongoengine](http://mongoengine.org/)
+Adding Requests and Twilio to requirements.txt
 
-Adding Mongoengine to requirements.txt
+	requests
+	twilio
 
-	Mongoengine==0.7.5
-	unidecode
+In your code directory run the command below to install new requirements.
 
-
-## Getting Started with MongoDB on Heroku
-
-We will be using MongoLabs as our MongoDB host service, they have a free starter plan that we can easily associate with our Heroku accounts. When we have added the MongoLabs service we will have a connection string that includes username, password and URI to the database server.
-
-### Step 1 : Download code, setup Git, heroku create
-
-1. Download the sample code from [Github](https://github.com/johnschimmel/ITP-DWD-Fall-2012-Week-5)
-2. Navigate to code directory in Terminal. Create Git repo
-
-		git init
-		git add .
-		git commit -m "initial commit"
-
-	Create virtual environment and install requirements
-
-		virtualenv venv
-		. runpip
-
-3. Create a new Heroku app
-
-		heroku create
+	. runpip
 
 
-### Step 2 : Adding MongoLabs to your Heroku App
 
-Heroku offers a [lot of different Add-ons](https://addons.heroku.com/) for your apps. Many different types of databases, image tools, cache utilities are available from 3rd party companies. Many offer a trial plan to test and develop with before you commit to a paid plan.
+## Getting Started with Remote APIs
 
-MongoLabs offers a [250MB MongoDB instance for free](https://addons.heroku.com/mongolab) (see here) : ) How wonderful.
+### Foursquare API
 
-To install the MongoLabs 
+route **/fsq**
 
-* Navigate to the code folder of your app
-* In Terminal, add the MongoLab starter plan
+This is a demo of passing a latitude and longitude to Foursquare Venue Search to get the venues nearby.
 
-		heroku addons:add mongolab:starter
+You will need the following for the demo
 
-This has added MongoLab to your app.
+[Register a new application with Foursquare's developer site](https://foursquare.com/developers/apps)
 
-### Step 3: Configure your local environment
+Take the Client ID and Client Secret and put them inside your .env file
+  
+**.env**
 
-When adding Add-ons, Heroku will add the required configuration variables for the services including username, password, urls, etc. 
-
-We must create a local configuration file to allow our local development server to connect to the MongoLabs MongoDB instance. We can grab a copy of our Heroku configuration variables and put them inside a **.env** file, our environment variable file.
-
-Run the following command inside your code folder.
-
-	heroku config --shell > .env
-
-This will create a new file, **.env**  and it will contain a single line starting with MONGOLAB_URI and followed by a long connection url. This is the username and password for your MongoLabs account.
-
-.env
-
-	MONGOLAB_URI=mongodb://heroku_app8083291:sadlfkweweroi........
-
-### Step 4: Add .env to .gitignore file
-
-We want GIT to ignore the .env file, **VERY IMPORTANT**  This keeps our environment variables safe and they won't get included inside our GIT repository (or worse, get pushed to Github).
-
-Open your .gitignore file and add '.env' on a new line. Save the file.
-
-.gitignore
-
-	.env
+	FOURSQUARE_CLIENT_ID=XXXXXXXXXXXXXXXX
+	FOURSQUARE_CLIENT_SECRET=XXXXXXXXXXXX
 
 
-### Step 5: Start your servers
+**app.py** will use the environment variables to make the request to Foursquare.
 
-	. start
+**IMPORTANT** Heroku needs your Foursquare client information too, we need to add new config variables to your app.
 
-or
+**In your code directory in Terminal run,**
 
-	foreman start
+	heroku config:add FOURSQUARE_CLIENT_ID=XXXXXXXXXXXXX 
+	heroku config:add FOURSQUARE_CLIENT_SECRET=XXXXXXXXXXXXXX
+
+
+### Set up Google
+Get your own Google API Key here [https://code.google.com/apis/console/b/0/](https://code.google.com/apis/console/b/0/).
+
+Put the API Key in the Javascript, in the fsq.html template file.
+
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE&sensor=false"></script>
+
+----------------
+
+## Twilio demo
+
+### Getting Twilio Account
+
+* Register [https://www.twilio.com/try-twilio](https://www.twilio.com/try-twilio).
+* Verify phone number with access code.
+* Pick a phone number.
+* Poke around all their API endpoints, make and receive calls, make and receive SMS.
+
+When you are registered locate your your Account SID and Auth Token here,[https://www.twilio.com/user/account](https://www.twilio.com/user/account) and add them to your .env file
+
+**.env**	
+
+	TWILIO_ACCOUNT_SID=xxxxxxxxxxxxxx
+	TWILIO_AUTH_TOKEN=xxxxxxxxx
+
+Now let's add the Twilio account variables to Heroku.
+
+**In your code directory in Terminal run,**
+
+	heroku config:add TWILIO_ACCOUNT_SID=xxxxxxxxxxxxxx
+	heroku config:add TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxx
+
+
