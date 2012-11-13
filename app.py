@@ -69,6 +69,7 @@ def fsqdemo():
 
 @app.route('/twilio', methods=['GET','POST'])
 def twilio():
+	
 	if request.method == "GET":
 		return render_template('twilio.html')
 
@@ -82,7 +83,7 @@ def twilio():
 		if len(telephone_num) != 11:
 			return "your target phone number must be 11 digits. go back and try again."
 		else:
-			to_number = "+1" + str(telephone_num) #US country only now
+			to_number = "+" + str(telephone_num) #US country only now
 
 
 		# trim message to 120
@@ -101,6 +102,23 @@ def twilio():
 
 		return "message '%s' sent" % sms_text
 
+@app.route('/mailgun', methods=['GET','POST'])
+def mailgun():
+
+	test_email = {
+		'to' : 'john.schimmel@gmail.com',
+		'from' : 'schimmel@nyu.edu',
+		'subject' : 'testing',
+		'text' : 'testing 123'
+	}
+
+	result = requests.post("https://api.mailgun.net/v2/samples.mailgun.org/messages", 
+							auth=('api',os.environ.get('MAILGUN_API_KEY')), 
+							data=test_email)
+
+	app.logger.info(result)
+
+	return str(result.status_code)
 
 @app.errorhandler(404)
 def page_not_found(error):
