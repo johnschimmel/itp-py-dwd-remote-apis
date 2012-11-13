@@ -67,6 +67,7 @@ When you are registered locate your your Account SID and Auth Token here,[https:
 
 	TWILIO_ACCOUNT_SID=xxxxxxxxxxxxxx
 	TWILIO_AUTH_TOKEN=xxxxxxxxx
+	TWILIO_PHONE_NUMBER=+XXXXXXXXX
 
 Now let's add the Twilio account variables to Heroku.
 
@@ -74,5 +75,6 @@ Now let's add the Twilio account variables to Heroku.
 
 	heroku config:add TWILIO_ACCOUNT_SID=xxxxxxxxxxxxxx
 	heroku config:add TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxx
+	heroku config:add TWILIO_PHONE_NUMBER=+XXXXXXXXX
 
 

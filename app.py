@@ -94,8 +94,9 @@ def twilio():
 
 		client = TwilioRestClient(account, token)
 
+		from_telephone = os.environ.get('TWILIO_PHONE_NUMBER') # format +19171234567
 
-		message = client.sms.messages.create(to=to_number, from_="+16465025220",
+		message = client.sms.messages.create(to=to_number, from_=from_telephone,
 	                                     body="DWD DEMO: " + sms_text)
 
 		return "message '%s' sent" % sms_text

@@ -34,6 +34,7 @@
 
 <pre><code>TWILIO_ACCOUNT_SID=xxxxxxxxxxxxxx
 TWILIO_AUTH_TOKEN=xxxxxxxxx
+TWILIO_PHONE_NUMBER=+1xxxxxxxxx
 </code></pre>
 
 <p>Now let's add the Twilio account variables to Heroku.</p>
@@ -42,6 +43,7 @@ TWILIO_AUTH_TOKEN=xxxxxxxxx
 
 <pre><code>heroku config:add TWILIO_ACCOUNT_SID=xxxxxxxxxxxxxx
 heroku config:add TWILIO_AUTH_TOKEN=xxxxxxxxxxxxxx
+heroku config:add TWILIO_PHONE_NUMBER=+1xxxxxxxxx
 </code></pre>
 {% endblock %}
 
