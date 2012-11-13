@@ -1,0 +1,68 @@
+{% extends "layout/main.html" %}
+
+{% block body %}
+
+<div id="map_canvas" style="width:100%;height:300px;"></div>
+<hr>
+<label for="user_location">Search by street address of zipcode</label>
+<input type="text" id="user_location" name="user_location" value="721 Broadway, New York NY">
+<br>
+<input type="button" id="locate_button" class="btn" value="Locate">
+{% endblock %}
+
+
+{% block scripts %}
+<!--
+	Google Maps API
+	https://developers.google.com/maps/documentation/javascript/tutorial
+
+	Get API Key here >> https://code.google.com/apis/console/b/0/
+	Put API Key in line below
+
+--> 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQsmkT26JbAduQgEDzrtBaIjStLou_z3c&sensor=false"></script>
+
+<!--
+Google Geocoding Javascript API
+https://developers.google.com/maps/documentation/javascript/geocoding
+-->
+<script>
+
+var geocoder;
+var map;
+
+	jQuery(document).ready(function(){
+		initialize();
+		codeAddress();
+
+	});
+
+
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(40.729425,-73.993707);
+    var mapOptions = {
+      zoom: 15,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+  }
+
+  function codeAddress() {
+    var address = document.getElementById("user_location").value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+</script>
+{% endblock%}
+
