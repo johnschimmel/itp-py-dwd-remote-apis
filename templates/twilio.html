@@ -1,0 +1,24 @@
+{% extends "layout/main.html" %}
+
+
+{% block body %}
+
+
+<h2>Twilio example, form to sms</h2>
+<form method="POST">
+	<label>Send John a txt. Be nice.</label>
+	<input type="text" name="sms_text"><br>
+	<input type="submit" class="btn" value="send it">
+</form>
+
+<hr>
+
+<p>Register - <a href="https://www.twilio.com/try-twilio">https://www.twilio.com/try-twilio</a></p>
+<p>Verify phone number with access code.</p>
+<p>Pick a phone number.</p>
+<p>Poke around all their API endpoints, make and receive calls, make and receive SMS.</p>
+{% endblock %}
+
+
+{% block styles %}{% endblock %}
+{% block scripts %}{% endblock %}

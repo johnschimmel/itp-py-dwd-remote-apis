@@ -1,0 +1,121 @@
+{% extends "layout/main.html" %}
+
+{% block body %}
+<h2>Foursquare Venue Search API</h2>
+<p>With some Google Geocode API, too.</p>
+
+<p>You will need to
+  <ul>
+
+  </ul>
+</p>
+<hr>
+
+<div class="row">
+  <div class="span6">
+    <label for="user_address">Step #1.<br>Look up Lat/Lng for an address or zipcode.</label>
+    <input type="text" id="user_address" name="user_address" value="721 Broadway, New York NY">
+    <br>
+    <input type="button" id="locate_button" class="btn" value="Locate">
+
+  </div>
+
+  <div class="span6">
+    <form method="POST">
+      <label for="user_address">Step #2.<br>Send Latitude / Longitude to search.</label>
+      <input type="text" id="user_latlng" name="user_latlng" size="40"><br>
+      <input type="submit" id="search_button" class="btn" value="Search 4SQ" disabled=disabled>
+    </form>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="span8">
+
+    <h3>Setup Foursquare API</h3>
+    <p><a href="https://foursquare.com/developers/apps">Register a new application with Foursquare's developer site</a></p>
+    <p>
+      Take the Client ID and Client Secret and put them inside your .env file<br>
+      
+      <br><b>.env</b><br>
+      <pre>CLIENT_ID=XXXXXXXXXXXXXXXX
+CLIENT_SECRET=XXXXXXXXXXXX</pre>
+
+      <b>app.py</b> will use the environment variables to make the request to Foursquare.
+    </p>
+    <p><b>IMPORTANT</b> Heroku needs your Foursquare client information too, we need to add new config variables to your app.<br>
+
+      <br><b>In your code directory in Terminal run,</b><br>
+      <pre>heroku config:add CLIENT_ID=XXXXXXXXXXXXX 
+heroku config:add CLIENT_SECRET=XXXXXXXXXXXXXX</pre>
+    </p>
+
+    <h3>Set up Google</h3>
+    <p>Get your own Google API Key here <a href="https://code.google.com/apis/console/b/0/">https://code.google.com/apis/console/b/0/</a>.</p>
+    <p>Put the API Key in the Javascript, in the fsq.html template file.
+      <code><pre>&lt;script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE&sensor=false"&gt;&lt;/script&gt;</pre></code>
+    </p>
+
+
+
+  </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<!--
+	Google Maps API
+	https://developers.google.com/maps/documentation/javascript/tutorial
+
+	Get API Key here >> https://code.google.com/apis/console/b/0/
+	Put API Key in line below
+
+--> 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQsmkT26JbAduQgEDzrtBaIjStLou_z3c&sensor=false"></script>
+
+<!--
+Google Geocoding Javascript API
+https://developers.google.com/maps/documentation/javascript/geocoding
+-->
+<script>
+  var geocoder;
+  var google_location;
+
+  // when html dom is ready, run this code  
+  jQuery(document).ready(function(){
+
+      // initialize google geocoder
+      geocoder = new google.maps.Geocoder();
+
+      // locate button click event
+      jQuery('#locate_button').click(codeAddress);
+      
+  });
+
+  var codeAddress = function(){
+    var address = jQuery('#user_address').val();
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+
+        console.log("received geo info from Google");
+        console.log(results);
+        console.log(results[0].geometry.location);
+        
+        google_location = results[0].geometry.location;
+        latlng_str = google_location.lat() + "," + google_location.lng();
+        console.log(latlng_str);
+
+        jQuery('#user_latlng').val(latlng_str);
+        jQuery('#search_button').removeAttr('disabled');
+
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+</script>
+{% endblock%}
+

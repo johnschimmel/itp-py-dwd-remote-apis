@@ -3,22 +3,25 @@ import os, datetime
 import re
 from unidecode import unidecode
 
-from flask import Flask, request, render_template, redirect, abort
+from flask import Flask, request, render_template, redirect, abort, jsonify
 import requests
+
+# Twilio
+from twilio.rest import TwilioRestClient
 
 # create Flask app
 app = Flask(__name__)   # create our flask app
 
 
 # --------- Routes ----------
-@app.route("/fsq")
+@app.route("/fsq", methods=['GET','POST'])
 def fsqdemo():
 	if request.method == "GET":
-		return render_template('demo_fsq.html')
+		return render_template('fsq.html')
 
 	elif request.method == "POST":
 
-		user_location = request.form.get('user_location')
+		user_latlng = request.form.get('user_latlng')
 
 		# Foursquare API endpoint for Venues
 		fsq_url = "https://api.foursquare.com/v2/venues/search"
@@ -27,7 +30,7 @@ def fsqdemo():
 		# simple example includes lat,long search
 		# we pass in our client id and secret along with 'v', a version date of API.
 		fsq_query = {
-			'll' : '40.729425,-73.993707',
+			'll' : user_latlng,
 			'client_id' : os.environ.get('FOURSQUARE_CLIENT_ID'), # info from foursquare developer setting, placed inside .env
 			'client_secret' : os.environ.get('FOURSQUARE_CLIENT_SECRET'),
 			'v' : '20121113' # YYYYMMDD
@@ -59,6 +62,29 @@ def fsqdemo():
 			# Foursquare API request failed somehow
 			return "uhoh, something went wrong %s" % results.json
 
+
+@app.route('/twilio', methods=['GET','POST'])
+def twilio():
+	if request.method == "GET":
+		return render_template('twilio.html')
+
+	elif request.method == "POST":
+
+		sms_text = request.form.get('sms_text')
+
+		# trim message
+		if len(sms_text) > 100:
+			sms_text = sms_text[0:99]
+
+		account = os.environ.get('TWILIO_ACCOUNT_SID')
+		token = os.environ.get('TWILIO_AUTH_TOKEN')
+
+		client = TwilioRestClient(account, token)
+
+		message = client.sms.messages.create(to="+16467838457", from_="+16465025220",
+	                                     body="WEB TEST " + sms_text)
+
+		return "message '%s' sent" % sms_text
 
 
 @app.errorhandler(404)
