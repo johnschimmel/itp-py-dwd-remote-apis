@@ -105,20 +105,36 @@ def twilio():
 @app.route('/mailgun', methods=['GET','POST'])
 def mailgun():
 
-	test_email = {
-		'to' : 'john.schimmel@gmail.com',
-		'from' : 'john.schimmel@gmail.com',
-		'subject' : 'testing',
-		'text' : 'testing 123'
-	}
 
-	result = requests.post("https://api.mailgun.net/v2/%s/messages" % os.environ.get('MAILGUN_DOMAIN'), 
-							auth=('api',os.environ.get('MAILGUN_API_KEY')), 
-							data=test_email)
+	if request.method == "GET":
+		return render_template('mailgun.html')
 
-	app.logger.info(result)
+	elif request.method == "POST":
 
-	return str(result.status_code)
+		# prepare email data for mailgun
+		email_data = {
+			'to' : request.form.get('receipient'),
+			'from' : request.form.get('sender'),
+			'subject' : request.form.get('subject'),
+			'text' : request.form.get('message')
+		}
+
+		# build the mailgun url
+		# we build the url with the MAILGUN_DOMAIN
+		mailgun_url = "https://api.mailgun.net/v2/%s/messages" % os.environ.get('MAILGUN_DOMAIN')
+		result = requests.post(mailgun_url, 
+							auth=('api',os.environ.get('MAILGUN_API_KEY')),
+							data=email_data)
+
+		# response to user
+		if result.status_code == 200:
+			return "Your email has been sent"
+
+		else:
+			app.logger.error(result.text)
+			return "Something went wrong and email might not have been sent."
+		
+		return str(result.status_code)
 
 @app.errorhandler(404)
 def page_not_found(error):
