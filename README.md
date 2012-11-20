@@ -103,3 +103,39 @@ Now let's add the Twilio account variables to Heroku.
 	heroku config:add TWILIO_PHONE_NUMBER=+XXXXXXXXX
 
 
+
+-----------------
+
+## Mailgun
+
+Mailgun allows you to send email via API (you can also receive email but that's for another day).
+
+Add Mailgun to your Heroku app
+
+	heroku addons:add mailgun:starter
+
+This is the starter plan for Mailgun and they give you 300 msgs / day for free to use for development.
+
+Heroku and Mailgun will give you a couple of config variables. We need to place 2 variables in our .env, one of the variables we get from our Heroku config and the other variable we need to lookup via the Heroku Mailgun console panel.
+
+#1 Get your MAILGUN_API_KEY
+
+	heroku config --shell | grep MAILGUN_API_KEY
+
+Put the returned line into your .env file. It will look something like...
+
+	MAILGUN_API_KEY=XXXXXXXXXXXXXXXXXXXXXXX
+
+#2 Get your MAILGUN DOMAIN NAME
+
+Go to your Heroku App Console [https://dashboard.heroku.com/apps](https://dashboard.heroku.com/apps). Click on your app and go to the Addons section on the lower left, click on Mailgun Starter. 
+
+Inside the Mailgun control panel you will see your Email domains listed. Copy your email domain and put it inside your .env file
+
+	MAILGUN_DOMAIN=appXXXXXXX.mailgun.org
+
+Now, we need to share this new domain with Heroku config,
+
+	heroku config:add MAILGUN_DOMAIN=app9196816.mailgun.org
+
+You can now start your server and test the code at /mailgun.

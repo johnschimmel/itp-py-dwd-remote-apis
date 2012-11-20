@@ -102,6 +102,8 @@ def twilio():
 
 		return "message '%s' sent" % sms_text
 
+
+# mailgun api example
 @app.route('/mailgun', methods=['GET','POST'])
 def mailgun():
 
