@@ -25,6 +25,44 @@
 
 <hr>
 
+<h2 id="mailgun">Mailgun</h2>
+
+<p>Mailgun allows you to send email via API (you can also receive email but that's for another day).</p>
+
+<p>Add Mailgun to your Heroku app</p>
+
+<pre><code>heroku addons:add mailgun:starter
+</code></pre>
+
+<p>This is the starter plan for Mailgun and they give you 300 msgs / day for free to use for development.</p>
+
+<p>Heroku and Mailgun will give you a couple of config variables. We need to place 2 variables in our .env, one of the variables we get from our Heroku config and the other variable we need to lookup via the Heroku Mailgun console panel.</p>
+
+<p>#1 Get your MAILGUN_API_KEY</p>
+
+<pre><code>heroku config --shell | grep MAILGUN_API_KEY
+</code></pre>
+
+<p>Put the returned line into your .env file. It will look something like...</p>
+
+<pre><code>MAILGUN_API_KEY=XXXXXXXXXXXXXXXXXXXXXXX
+</code></pre>
+
+<p>#2 Get your MAILGUN DOMAIN NAME</p>
+
+<p>Go to your Heroku App Console <a href="https://dashboard.heroku.com/apps">https://dashboard.heroku.com/apps</a>. Click on your app and go to the Addons section on the lower left, click on Mailgun Starter. </p>
+
+<p>Inside the Mailgun control panel you will see your Email domains listed. Copy your email domain and put it inside your .env file</p>
+
+<pre><code>MAILGUN_DOMAIN=appXXXXXXX.mailgun.org
+</code></pre>
+
+<p>Now, we need to share this new domain with Heroku config,</p>
+
+<pre><code>heroku config:add MAILGUN_DOMAIN=app9196816.mailgun.org
+</code></pre>
+
+<p>You can now start your server and test the code at /mailgun.</p>
 {% endblock %}
 
 
